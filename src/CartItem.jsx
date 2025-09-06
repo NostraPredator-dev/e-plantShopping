@@ -7,8 +7,12 @@ const CartItem = ({ onContinueShopping }) => {
     const cart = useSelector(state => state.cart.items);
     const dispatch = useDispatch();
 
+    const parseCost = (cost) => {
+        return parseFloat(cost.replace('$', ''));
+    }
+
     const calculateTotalAmount = () => {
-        return cart.reduce((total, item) => total + item.cost * item.quantity, 0).toFixed(2);
+        return cart.reduce((total, item) => total + parseCost(item.cost) * item.quantity, 0).toFixed(2);
     };
 
     const handleContinueShopping = (e) => {
@@ -38,7 +42,7 @@ const CartItem = ({ onContinueShopping }) => {
 
     // Calculate total cost based on quantity for an item
     const calculateTotalCost = (item) => {
-        return (item.cost * item.quantity).toFixed(2);
+        return (parseCost(item.cost) * item.quantity).toFixed(2);
     };
 
     return (
